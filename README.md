@@ -60,8 +60,11 @@ ECHO가 Low로 떨어지면 카운트 종료. 카운트값을 distance_data로 �
 ### START 
 MCU가 데이터선을 LOW로 ≥18ms 유지한 후 HIGH로 전환한다.
 
-### WAIT / SENSOR RESPONSE 
-센서는 약 80µs LOW, 이어서 약 80µs HIGH의 응답 신호를 보낸다.
+### WAIT
+30usec의 WAIT를 기다린 후 INPUT으로 전환한다.
+
+### SYNC
+약 80µs LOW, 이어서 약 80µs HIGH의 응답 신호를 보내 데이터의 Sync 값을 먼저 받는다.
 
 ### DATA 전송 
 - 센서는 총 40비트의 데이터를 전송한다.
