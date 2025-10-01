@@ -1,4 +1,4 @@
-# UART 
+# UART Control Project
 
 ---
 
