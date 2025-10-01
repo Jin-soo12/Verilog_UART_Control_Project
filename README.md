@@ -55,10 +55,10 @@ ECHO가 Low로 떨어지면 카운트 종료. 카운트값을 distance_data로 �
 <img width="956" height="507" alt="image" src="https://github.com/user-attachments/assets/b64d9fd8-b89f-4c40-bce6-d56d95cdcd5f" />
 
 ### IDLE 
-버스는 풀업 상태로 유지되고 센서는 대기 상태로 대기한다.
+풀업 상태로 유지되고 센서는 대기 상태로 대기한다.
 
 ### START 
-MCU가 데이터선을 LOW로 ≥18ms 유지한 후 HIGH로 전환한다.
+MCU가 데이터선을 LOW로 18ms 유지한 후 HIGH로 전환한다.
 
 ### WAIT
 30usec의 WAIT를 기다린 후 INPUT으로 전환한다.
@@ -66,13 +66,13 @@ MCU가 데이터선을 LOW로 ≥18ms 유지한 후 HIGH로 전환한다.
 ### SYNC
 약 80µs LOW, 이어서 약 80µs HIGH의 응답 신호를 보내 데이터의 Sync 값을 먼저 받는다.
 
-### DATA 전송 
+### DATA
 - 센서는 총 40비트의 데이터를 전송한다.
 
 - 각 비트는 먼저 약 50µs LOW를 보낸 후 HIGH 펄스의 길이로 0/1을 구분한다.(HIGH 약 26–28µs는 비트 0을, HIGH 약 70µs는 비트 1을 의미)
 
-### STOP / 완료 
-전송이 끝나면 센서는 라인을 릴리즈하고 버스는 다시 풀업 상태로 복귀한다.
+### STOP
+전송이 끝나면 센서는 라인을 릴리즈하고 다시 풀업 상태로 복귀한다.
 
 ---
 
