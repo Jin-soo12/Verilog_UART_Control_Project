@@ -11,7 +11,7 @@ SR04 초음파 센서, DHT11 온습도 센서 모듈의 데이터 시트의 분�
 - [설계 목표](#설계-목표)
 - [센서모듈 설명](#센서모듈-설명)
 - [Architecture](#Architecture)
-- [주요코드 설명](#주요코드-설명)
+- [FSM](#FSM)
 - [Simulation](#Simulation)
 - [Trouble Shooting](#Trouble-Shooting)
 - [결론 및 고찰](#결론-및-고찰)
@@ -78,11 +78,33 @@ MCU가 데이터선을 LOW로 18ms 유지한 후 HIGH로 전환한다.
 
 ## Architecture  
 
+### SR04 Sensor
+
+<img width="1624" height="787" alt="image" src="https://github.com/user-attachments/assets/273bd410-cb9f-4a7e-95fc-3a390e5dee49" />
+
+UART통신을 통해 START Trigger를 주면 SR04센서 내로 Trigger 신호가 들어가고 Echo신호를 받아 거리를 측정.
+
+### DHT11 Sensor
+
+<img width="1601" height="748" alt="image" src="https://github.com/user-attachments/assets/06c56acc-5c88-4509-83bb-20f9dcb32b5f" />
+
+UART통신을 통해 START Trigger를 주면 DHT11 내로 신호가 들어가고 Inout으로 선언 된 포트를 통해 온습도 데이터를 측정.
+
+### TOP Module
+<img width="1780" height="662" alt="image" src="https://github.com/user-attachments/assets/b90c4708-4c43-4908-9c23-6b6e335282a8" />
+
+전체 TOP Module에선 Control Unit 부분을 바깥으로 빼서 모든 모듈을 하나의 Control Unit에서 제어할 수 있도록 설계.
+
 ---
 
-## 주요코드 설명  
+## FSM
+
+<img width="1128" height="694" alt="image" src="https://github.com/user-attachments/assets/d06b87fb-6dca-4b5e-9966-026b161cb3cc" />
+
+**시간모드(시계, 스톱워치 기능)** 와 **센서모드(온습도 센서, 초음파 센서 기능)** 를 각 모드에 따라 상태를 나누고 **3Byte의 데이터** 가 UART를 통해 들어오면 Control Unit의 판단에 따라 각 모듈을 제어함.
 
 ---
+
 
 ## Simulation  
 
