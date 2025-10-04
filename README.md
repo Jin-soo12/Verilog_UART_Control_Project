@@ -21,7 +21,7 @@ SR04 초음파 센서, DHT11 온습도 센서 모듈의 데이터 시트의 분�
 ## 설계 목표  
 <img width="1614" height="615" alt="image" src="https://github.com/user-attachments/assets/07c8feab-0c69-4502-a5d9-9c497a90d86e" />
 
-UART 통신을 기반으로 **RX FIFO**와 FSM을 활용하여 센서 데이터의 **다중 바이트 수신** 및 상태 처리를 수행하고, CU(Control Unit)를 통해 여러 센서를 **통합 제어**하는 시스템을 구현하는 것이 목표입니다.
+UART 통신을 기반으로 **RX FIFO**와 FSM을 활용하여 센서 데이터의 **다중 바이트 수신** 및 상태 처리를 수행하고, CU(Control Unit)를 통해 여러 센서를 **통합 제어**하는 시스템을 구현하는 것.
 
 ---
 
@@ -32,21 +32,21 @@ UART 통신을 기반으로 **RX FIFO**와 FSM을 활용하여 센서 데이터�
 
 ### Trigger 전송
 
-MCU가 TRIG 핀에 최소 10µs의 TTL High 펄스를 보낸다. (I)
+MCU가 TRIG 핀에 최소 10µs의 TTL High 펄스 전송. (I)
 
 ### 초음파 송신
 
-모듈은 40kHz의 초음파를 8-cycle(≈200µs) 정도 송신하고 주변에서 반사된 신호를 기다린다. (II)
+모듈은 40kHz의 초음파를 8-cycle(≈200µs) 정도 송신하고 주변에서 반사된 신호 대기. (II)
 
 ### Echo 펄스 측정
 
-모듈의 ECHO 핀은 반사파가 돌아오는 동안 High 상태를 유지한다.
+모듈의 ECHO 핀은 반사파가 돌아오는 동안 High 상태를 유지.
 
-이 ECHO High 지속시간을 **1MHz tick(1µs 단위)** 로 카운트한다 (echo == 1일 때 카운트.) (III)
+이 ECHO High 지속시간을 **1MHz tick(1µs 단위)** 로 카운트 (echo == 1일 때 카운트.) (III)
 
 ### 종료 및 결과 저장
 
-ECHO가 Low로 떨어지면 카운트 종료. 카운트값을 distance_data로 저장하고 dist_done 플래그를 세팅한다. (IV)
+ECHO가 Low로 떨어지면 카운트 종료. 카운트값을 distance_data로 저장하고 dist_done 플래그를 세팅. (IV)
 
 
 
@@ -56,24 +56,24 @@ ECHO가 Low로 떨어지면 카운트 종료. 카운트값을 distance_data로 �
 <img width="956" height="507" alt="image" src="https://github.com/user-attachments/assets/b64d9fd8-b89f-4c40-bce6-d56d95cdcd5f" />
 
 ### IDLE 
-풀업 상태로 유지되고 센서는 대기 상태로 대기한다.
+풀업 상태로 유지되고 센서는 대기 상태로 대기.
 
 ### START 
-MCU가 데이터선을 LOW로 18ms 유지한 후 HIGH로 전환한다.
+MCU가 데이터선을 LOW로 18ms 유지한 후 HIGH로 전환.
 
 ### WAIT
-30usec의 WAIT를 기다린 후 INPUT으로 전환한다.
+30usec의 WAIT를 기다린 후 INPUT으로 전환.
 
 ### SYNC
-약 80µs LOW, 이어서 약 80µs HIGH의 응답 신호를 보내 데이터의 Sync 값을 먼저 받는다.
+약 80µs LOW, 이어서 약 80µs HIGH의 응답 신호를 보내 데이터의 Sync 값을 먼저 수신.
 
 ### DATA
-- 센서는 총 40비트의 데이터를 전송한다.
+- 센서는 총 40비트의 데이터를 전송.
 
-- 각 비트는 먼저 약 50µs LOW를 보낸 후 HIGH 펄스의 길이로 0/1을 구분한다.(HIGH 약 26–28µs는 비트 0을, HIGH 약 70µs는 비트 1을 의미)
+- 각 비트는 먼저 약 50µs LOW를 보낸 후 HIGH 펄스의 길이로 0/1을 구분.(HIGH 약 26–28µs는 비트 0을, HIGH 약 70µs는 비트 1을 의미)
 
 ### STOP
-전송이 끝나면 센서는 라인을 릴리즈하고 다시 풀업 상태로 복귀한다.
+전송이 끝나면 센서는 라인을 릴리즈하고 다시 풀업 상태로 복귀.
 
 ---
 
@@ -105,7 +105,7 @@ UART통신을 통해 START Trigger를 주면 DHT11 내로 신호가 들어가고
 
 <img width="1128" height="694" alt="image" src="https://github.com/user-attachments/assets/d06b87fb-6dca-4b5e-9966-026b161cb3cc" />
 
-**시간모드(시계, 스톱워치 기능)** 와 **센서모드(온습도 센서, 초음파 센서 기능)** 를 각 모드에 따라 상태를 나누고 **3Byte의 데이터** 가 UART를 통해 들어오면 Control Unit의 판단에 따라 각 모듈을 제어함.
+**시간모드(시계, 스톱워치 기능)** 와 **센서모드(온습도 센서, 초음파 센서 기능)** 를 각 모드에 따라 상태를 나누고 **3Byte의 데이터** 가 UART를 통해 들어오면 Control Unit의 판단에 따라 각 모듈을 제어.
 
 ---
 
@@ -134,13 +134,13 @@ UART통신을 통해 START Trigger를 주면 DHT11 내로 신호가 들어가고
 
 ## 결론 및 고찰
 
-### 결론
+**결론**
 - 각 모듈의 **데이터시트의 분석**을 통해 모듈 설계를 성공적으로 해냈음.
 - 모든 모듈들을 **UART의 Multi Byte 통신**과 **Control Unit**을 통해 성공적으로 제어하였음.
-### 느낀점
+**느낀점**
 - 모듈을 설계하는 과정에서 **데이터시트의 정밀한 분석**과 **타이밍 제어**가 중요함을 느꼈음.
 - 그로 인해 어떤 새로운 모듈을 다루더라도 데이터시트만 있다면 제어가 가능함을 깨달았음.
 - 또한 TX, RX의 **UART 통신 구조**와 **FIFO**를 같이 다루면서 전반적인 통신 프로토콜을 이해함.
-### 아쉬운점
+**아쉬운점**
 - 설계를 3Byte만 받을 수 있도록 설계하여 3Byte가 아닌 데이터가 들어오면 값이 꼬이는 현상이 있었음.
 - 한 단어가 끝났다는 어떠한 신호가 있다면 이를 해결할 수 있을 것임.
